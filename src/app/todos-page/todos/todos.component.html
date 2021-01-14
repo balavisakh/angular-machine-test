@@ -1,0 +1,9 @@
+<div class="todos">
+    <button (click)="navBack()" mat-raised-button color= "primary">Go Back</button>
+    <mat-card *ngFor="let todo of todos">
+        <b>id</b> <p>{{todo.id}}</p>
+        <b>Title</b> <p>{{todo.title}}</p>
+        <b>isCompleted</b> <p>{{todo.completed}}</p>
+    </mat-card>
+</div>
+<p *ngIf="!todos">Data is loading...</p>
