@@ -99,4 +99,8 @@ export class AddOrEditComponent implements OnInit {
     
   }
 
+  cancelUserUpdate() {
+    this.router.navigate(['']);
+  }
+
 }
