@@ -11,13 +11,17 @@ export class DetailsComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router) { }
   @Input() selectedRows: [];
+  editedData = [];
   ngOnInit(): void {
+    this.getEditedData();
   }
 
   deleteUser(id) {
-    this.userService.deleteUser(id).subscribe();
-    alert(`user ${id} deleted`);
-    console.log(`user ${id} deleted`);
+    this.userService.deleteUser(id).subscribe(()=>{
+      this.selectedRows.splice(this.selectedRows.length -1,1);
+      alert(`user ${id} deleted`);
+      console.log(`user ${id} deleted`);
+    });
   }
 
   editUser(id) {
@@ -26,6 +30,13 @@ export class DetailsComponent implements OnInit {
 
   viewTodos(id) {
     this.router.navigate(['view-todos',id]);
+  }
+
+  getEditedData() {
+    setTimeout(() => {
+      this.editedData = this.userService.getEditedUser();
+    console.log(this.editedData,"editedData");
+    }, 2000);
   }
 
 }

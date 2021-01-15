@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 })
 export class UserService {
   api_url = environment.api_url;
+  editedUser = [];
   constructor(private http: HttpClient) { }
 
   getAllUsers():Observable<any> {
@@ -27,5 +28,24 @@ export class UserService {
 
   getToDosById(id):Observable<any>  {
     return this.http.get(this.api_url + `/users/${id}/todos`);
+  }
+
+  addUser(body):Observable<any> {
+    return this.http.post(this.api_url + `/users`,body);
+  }
+
+  sendEditedUser(editedValues) {
+    this.editedUser = editedValues;
+    console.log(this.editedUser,"edit_service_data");
+    // if(this.editedUser["isChecked"]=== true){
+    //   this.editedUser = editedValues;
+    // }
+    // else {
+    //   this.editedUser.splice(this.editedUser.indexOf(editedValues),1);
+    // }
+  }
+
+  getEditedUser() {
+    return this.editedUser;
   }
 }

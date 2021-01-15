@@ -4,6 +4,7 @@
             <!-- user list table -->
             <h1 class="user-posts-title">All user details</h1>
 <div class="mat-elevation-z8">
+  <button mat-raised-button (click)="addUser()">Add user</button>
   <table mat-table [dataSource]="dataSource" matSort>
         <!-- Checkbox Column -->
   <ng-container matColumnDef="select">

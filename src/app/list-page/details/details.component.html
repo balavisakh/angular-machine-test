@@ -1,17 +1,33 @@
 <div>
-<ng-container  *ngFor="let selectedRow of selectedRows">
+  <ng-container *ngFor="let selectedRow of selectedRows">
     <mat-card>
-    <b>id: </b>{{ selectedRow.id }} <br>
-    <b>name: </b>{{ selectedRow.username }} <br>
-    <b>phone: </b>{{ selectedRow.phone }} <br>
-    <b>email: </b>{{ selectedRow.email }} <br>
-    <b>website: </b>{{ selectedRow.website }} <br>
-    <b>company Name: </b>{{ selectedRow.company.name }} <br>
-    <mat-card-actions>
-        <button (click)="editUser(selectedRow.id)" mat-button color="accent">Edit</button>
-        <button (click)="deleteUser(selectedRow.id)" mat-button color="warn">Delete</button>
-        <button (click)="viewTodos(selectedRow.id)" mat-button color="primary">See Todos</button>
-    </mat-card-actions>
-</mat-card> 
-</ng-container>
+      <b>id: </b>{{ selectedRow.id }} <br />
+      <b>name: </b>{{ selectedRow.username }} <br />
+      <b>phone: </b>{{ selectedRow.phone }} <br />
+      <b>email: </b>{{ selectedRow.email }} <br />
+      <b>website: </b>{{ selectedRow.website }} <br />
+      <b>company name: </b>{{ selectedRow.company.name }} <br />
+      <mat-card-actions>
+        <button (click)="editUser(selectedRow.id)" mat-button color="accent">
+          Edit
+        </button>
+        <button (click)="deleteUser(selectedRow.id)" mat-button color="warn">
+          Delete
+        </button>
+        <button (click)="viewTodos(selectedRow.id)" mat-button color="primary">
+          See Todos
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-container>
 </div>
+
+<mat-card *ngIf="editedData.length !=0">
+  <ng-container>
+    <b>id:</b> {{ editedData.userId }}<br />
+    <b>name:</b> {{ editedData.userName }}<br />
+    <b>email:</b> {{ editedData.userEmail }}<br />
+    <b>website:</b> {{ editedData.userWebsite }}<br />
+    <b>company name:</b> {{ editedData.userCompany }}<br />
+  </ng-container>
+</mat-card>

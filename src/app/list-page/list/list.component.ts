@@ -4,6 +4,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -17,7 +18,7 @@ export class ListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   selection = new SelectionModel(true, []);
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -60,6 +61,7 @@ export class ListComponent implements OnInit {
   }
 
   toggleAndRowSelect($event,row) {
+    console.log($event);
     if($event.checked === true) {
       this.selectedUsers.push(row)
     }
@@ -73,6 +75,10 @@ export class ListComponent implements OnInit {
     console.log(this.selection.selected,"sss")
     this.selectedUsers = this.selection.selected;
     console.log(this.selectedUsers,"all");
+  }
+
+  addUser() {
+    this.router.navigate(['add-user']);
   }
 
 }

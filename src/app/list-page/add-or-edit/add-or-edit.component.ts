@@ -11,6 +11,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 export class AddOrEditComponent implements OnInit {
   urlId:any;
   userDetails:any;
+  editedUserData = [];
 
   userId = new FormControl('', [Validators.required])
   userName = new FormControl('', [Validators.required])
@@ -87,7 +88,10 @@ export class AddOrEditComponent implements OnInit {
   userUpdate() {
     if(this.userFormGroup.valid) {
       const body = this.userFormGroup.value;
-      this.userService.updateUserById(this.urlId,body).subscribe(()=>{
+      this.userService.updateUserById(this.urlId,body).subscribe((editedUserValues)=>{
+        this.editedUserData = editedUserValues;
+        this.editedUserData["isChecked"]=true;
+        this.userService.sendEditedUser(this.editedUserData);
         this.router.navigate(['']);
         console.log(`user updated`);
       })
@@ -101,6 +105,20 @@ export class AddOrEditComponent implements OnInit {
 
   cancelUserUpdate() {
     this.router.navigate(['']);
+  }
+
+  addUser() {
+    if(this.userFormGroup.valid) {
+      const body = this.userFormGroup.value;
+    this.userService.addUser(body).subscribe(()=>{
+      this.router.navigate(['']);
+      console.log("user added");
+    })
+    }
+    else {
+      this.userFormGroup.markAllAsTouched();
+      return;
+    }
   }
 
 }

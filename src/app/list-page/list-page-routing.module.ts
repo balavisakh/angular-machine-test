@@ -14,6 +14,10 @@ const routes: Routes = [
     component: AddOrEditComponent
   },
   {
+    path: 'add-user',
+    component: AddOrEditComponent
+  },
+  {
     path: 'view-todos/:id',
     loadChildren: () => import('../todos-page/todos-page.module').then(m => m.TodosPageModule)
   }
