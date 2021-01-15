@@ -30,13 +30,15 @@ export class AddOrEditComponent implements OnInit {
   })
   ngOnInit(): void {
     this.getUrlId();
-    this.getUserByUrlId();
   }
 
   getUrlId() {
     this.activatedRoute.params.subscribe((urlId)=>{
       this.urlId = urlId.id;
       console.log(this.urlId,"urlId");
+      if(this.urlId){
+        this.getUserByUrlId();
+      }
     });
   }
 
@@ -118,6 +120,15 @@ export class AddOrEditComponent implements OnInit {
     else {
       this.userFormGroup.markAllAsTouched();
       return;
+    }
+  }
+
+  submit() {
+    if(this.urlId) {
+      this.userUpdate();
+    }
+    else {
+      this.addUser();
     }
   }
 

@@ -18,7 +18,9 @@ export class DetailsComponent implements OnInit {
 
   deleteUser(id) {
     this.userService.deleteUser(id).subscribe(()=>{
-      this.selectedRows.splice(this.selectedRows.length -1,1);
+      
+      // console.log("idd" ,this.selectedRows.findIndex((user:any)=> user.id === id));
+      this.selectedRows.splice(this.selectedRows.findIndex((user:any)=> user.id === id),1);
       alert(`user ${id} deleted`);
       console.log(`user ${id} deleted`);
     });
