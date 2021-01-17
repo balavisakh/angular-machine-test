@@ -14,8 +14,12 @@ export class UserService {
   subject =  new Subject<any>();
   
   sendUserDetails() {
-    this.subject.next("hai");
+    this.subject.next(this.userDetailsArray);
 }
+
+  getUserDetails(): Observable<any> {
+    return this.subject.asObservable();
+  }
   
   // getAllUsers():Observable<any> {
   //   return this.http.get(this.api_url + '/users');
