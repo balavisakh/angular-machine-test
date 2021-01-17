@@ -18,12 +18,17 @@ export class DetailsComponent implements OnInit {
 
   deleteUser(id) {
     this.userService.deleteUser(id).subscribe(()=>{
-      
-      // console.log("idd" ,this.selectedRows.findIndex((user:any)=> user.id === id));
-      this.selectedRows.splice(this.selectedRows.findIndex((user:any)=> user.id === id),1);
-      alert(`user ${id} deleted`);
+      this.userService.getSubscribedUsers().splice(this.userService.getSubscribedUsers().findIndex((user:any)=>
+    user.id === id),1);
+    alert(`user ${id} deleted`);
+    console.log(this.userService.getSubscribedUsers(),"hhhhhhhhh");
       console.log(`user ${id} deleted`);
+    // console.log(this.selectedRows,"rows")
+      // console.log("idd" ,this.selectedRows.findIndex((user:any)=> user.id === id));
+      // this.selectedRows.splice(this.selectedRows.findIndex((user:any)=> user.id === id),1);
     });
+  
+    
   }
 
   editUser(id) {
