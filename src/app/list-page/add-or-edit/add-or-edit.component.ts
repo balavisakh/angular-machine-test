@@ -113,6 +113,7 @@ export class AddOrEditComponent implements OnInit {
     if(this.userFormGroup.valid) {
       const body = this.userFormGroup.value;
     this.userService.addUser(body).subscribe(()=>{
+      this.userService.sendAddedData(body);
       this.router.navigate(['']);
       console.log("user added");
     })

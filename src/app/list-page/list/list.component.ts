@@ -21,13 +21,16 @@ export class ListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   selection = new SelectionModel(true, []);
   subscription: Subscription;
-  constructor(private userService: UserService, private router: Router) {
-
-  }
+  checked = false;
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.getUsersFromUserService();
-    this.userService.subject.subscribe((val)=>{console.log(val,"mm")});
+    this.userService.subject.subscribe(() => {
+      console.log("subject trigger")
+      this.selectedUsers = [];
+      this.getUsersFromUserService();
+    });
     // this.getUser();
   }
 
@@ -47,6 +50,7 @@ export class ListComponent implements OnInit {
   getUsersFromUserService() {
     if (this.userService.getSubscribedUsers()?.length) {
       this.dataSource.data = this.userService.getSubscribedUsers();
+      this.getSelectedUsers(this.dataSource.data);
       console.log(this.dataSource.data, 'all datas');
       return;
     } else {
@@ -55,6 +59,14 @@ export class ListComponent implements OnInit {
         console.log(this.dataSource.data, 'all');
       });
     }
+  }
+  getSelectedUsers(users: any[]) {
+    users.forEach((user) => {
+      if (user.isChecked) {
+        this.selectedUsers.push(user);
+      }
+    });
+    console.log(this.selectedUsers, 'sel');
   }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -84,6 +96,7 @@ export class ListComponent implements OnInit {
   toggleAndRowSelect($event, row) {
     console.log($event);
     if ($event.checked === true) {
+      row.isChecked = true;
       this.selectedUsers.push(row);
     } else {
       this.selectedUsers.splice(this.selectedUsers.indexOf(row), 1);
@@ -94,6 +107,9 @@ export class ListComponent implements OnInit {
   toggleAndselectAllrows() {
     console.log(this.selection.selected, 'sss');
     this.selectedUsers = this.selection.selected;
+    this.selectedUsers.forEach((user) => {
+      user.isChecked = true;
+    });
     console.log(this.selectedUsers, 'all');
   }
 

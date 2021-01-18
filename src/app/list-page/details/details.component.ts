@@ -13,7 +13,6 @@ export class DetailsComponent implements OnInit {
   @Input() selectedRows: [];
   editedData = [];
   ngOnInit(): void {
-    this.getEditedData();
   }
 
   deleteUser(id) {
@@ -37,13 +36,6 @@ export class DetailsComponent implements OnInit {
 
   viewTodos(id) {
     this.router.navigate(['view-todos',id]);
-  }
-
-  getEditedData() {
-    setTimeout(() => {
-      this.editedData = this.userService.getEditedUser();
-    console.log(this.editedData,"editedData");
-    }, 2000);
   }
 
 }

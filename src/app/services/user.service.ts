@@ -10,11 +10,13 @@ export class UserService {
   api_url = environment.api_url;
   editedUser = [];
   userDetailsArray:any = [];
+  addedUser;
+
   constructor(private http: HttpClient) {}
   subject =  new Subject<any>();
   
   sendUserDetails() {
-    this.subject.next(this.userDetailsArray);
+    this.subject.next();
 }
 
   getUserDetails(): Observable<any> {
@@ -28,6 +30,9 @@ export class UserService {
   getAllUsersAsShareData(){
     return this.http.get(this.api_url + '/users').pipe(map((userDetails) =>{
       this.userDetailsArray = userDetails;
+      this.userDetailsArray.forEach((user)=>{
+        user["isChecked"]= false;
+      })
       return this.userDetailsArray;
     }))
   }
@@ -39,6 +44,8 @@ export class UserService {
   }
 
   deleteUser(id:number):Observable<any> {
+    this.userDetailsArray.splice(this.userDetailsArray.findIndex((user)=> user.id === id),1);
+    this.sendUserDetails();
     return this.http.delete(this.api_url + `/users/${id}`);
   }
 
@@ -83,5 +90,22 @@ export class UserService {
 
   getEditedUser() {
     return this.editedUser;
+  }
+
+  sendAddedData(user) {
+    this.addedUser = user;
+    this.getAddedData();
+    console.log(this.userDetailsArray,"send");
+    console.log(this.addedUser,"sended user");
+  }
+
+  getAddedData() {
+    this.userDetailsArray.push({
+      id: this.addedUser.userId,
+      username: this.addedUser.userName,
+      email: this.addedUser.userEmail,
+      website: this.addedUser.userWebsite,
+      company: {name:this.addedUser.userCompany}
+    });
   }
 }

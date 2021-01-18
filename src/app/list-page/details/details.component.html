@@ -1,9 +1,9 @@
 <div>
   <ng-container *ngFor="let selectedRow of selectedRows">
-    <mat-card>
+    <mat-card *ngIf="selectedRow.isChecked === true">
       <b>id: </b>{{ selectedRow.id }} <br />
       <b>name: </b>{{ selectedRow.username }} <br />
-      <b>phone: </b>{{ selectedRow.phone }} <br />
+      <!-- <b>phone: </b>{{ selectedRow.phone }} <br /> -->
       <b>email: </b>{{ selectedRow.email }} <br />
       <b>website: </b>{{ selectedRow.website }} <br />
       <b>company name: </b>{{ selectedRow.company.name }} <br />
