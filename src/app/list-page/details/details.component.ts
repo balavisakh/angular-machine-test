@@ -19,7 +19,6 @@ export class DetailsComponent implements OnInit {
     this.userService.deleteUser(id).subscribe(()=>{
       this.userService.getSubscribedUsers().splice(this.userService.getSubscribedUsers().findIndex((user:any)=>
     user.id === id),1);
-    alert(`user ${id} deleted`);
     console.log(this.userService.getSubscribedUsers(),"hhhhhhhhh");
       console.log(`user ${id} deleted`);
     // console.log(this.selectedRows,"rows")
