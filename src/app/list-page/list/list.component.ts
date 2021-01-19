@@ -21,7 +21,6 @@ export class ListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   selection = new SelectionModel(true, []);
   subscription: Subscription;
-  checked = false;
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
@@ -94,9 +93,8 @@ export class ListComponent implements OnInit {
   }
 
   toggleAndRowSelect($event, row) {
-    console.log($event);
+    row.isChecked = $event.checked;
     if ($event.checked === true) {
-      row.isChecked = true;
       this.selectedUsers.push(row);
     } else {
       this.selectedUsers.splice(this.selectedUsers.indexOf(row), 1);
@@ -104,11 +102,11 @@ export class ListComponent implements OnInit {
     console.log(this.selectedUsers);
   }
 
-  toggleAndselectAllrows() {
+  toggleAndselectAllrows($event) {
     console.log(this.selection.selected, 'sss');
     this.selectedUsers = this.selection.selected;
     this.selectedUsers.forEach((user) => {
-      user.isChecked = true;
+      user.isChecked = $event.checked;
     });
     console.log(this.selectedUsers, 'all');
   }

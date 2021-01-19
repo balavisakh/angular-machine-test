@@ -6,103 +6,108 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-add-or-edit',
   templateUrl: './add-or-edit.component.html',
-  styleUrls: ['./add-or-edit.component.css']
+  styleUrls: ['./add-or-edit.component.css'],
 })
 export class AddOrEditComponent implements OnInit {
-  urlId:any;
-  userDetails:any;
+  urlId: any;
+  userDetails: any;
   editedUserData = [];
 
-  userId = new FormControl('', [Validators.required])
-  userName = new FormControl('', [Validators.required])
-  userEmail = new FormControl('', [Validators.required, Validators.email])
-  userWebsite = new FormControl('', [Validators.required])
-  userCompany = new FormControl('', [Validators.required])
-  country = new FormControl('', [Validators.required])
-  constructor(private userService: UserService, private activatedRoute: ActivatedRoute, private fb:FormBuilder, private router: Router) { }
+  userId = new FormControl('', [Validators.required]);
+  userName = new FormControl('', [Validators.required]);
+  userEmail = new FormControl('', [Validators.required, Validators.email]);
+  userWebsite = new FormControl('', [Validators.required]);
+  userCompany = new FormControl('', [Validators.required]);
+  country = new FormControl('', [Validators.required]);
+  constructor(
+    private userService: UserService,
+    private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   userFormGroup = this.fb.group({
     userId: this.userId,
     userName: this.userName,
     userEmail: this.userEmail,
     userWebsite: this.userWebsite,
-    userCompany: this.userCompany
-  })
+    userCompany: this.userCompany,
+  });
   ngOnInit(): void {
     this.getUrlId();
   }
 
   getUrlId() {
-    this.activatedRoute.params.subscribe((urlId)=>{
+    this.activatedRoute.params.subscribe((urlId) => {
       this.urlId = urlId.id;
-      console.log(this.urlId,"urlId");
-      if(this.urlId){
+      console.log(this.urlId, 'urlId');
+      if (this.urlId) {
         this.getUserByUrlId();
       }
     });
   }
 
   getUserByUrlId() {
-    this.userService.getUserById(this.urlId).subscribe((user)=>{
+    this.userService.getUserById(this.urlId).subscribe((user) => {
       this.userDetails = user;
       this.userFormGroup.patchValue({
         userId: this.userDetails.id,
         userName: this.userDetails.username,
         userEmail: this.userDetails.email,
         userWebsite: this.userDetails.website,
-        userCompany: this.userDetails.company.name
-      })
-      console.log(user,"userById")
+        userCompany: this.userDetails.company.name,
+      });
+      console.log(user, 'userById');
     });
   }
 
   getErrorUserId() {
-    if(this.userId.hasError('required')) {
-      return 'Enter User Id'
+    if (this.userId.hasError('required')) {
+      return 'Enter User Id';
     }
   }
 
   getErrorUserName() {
-    if(this.userName.hasError('required')) {
-      return 'Enter User Name'
+    if (this.userName.hasError('required')) {
+      return 'Enter User Name';
     }
   }
 
   getErrorUserEmail() {
-    if(this.userEmail.hasError('required')) {
-      return 'Enter User email'
+    if (this.userEmail.hasError('required')) {
+      return 'Enter User email';
     }
-    return 'Enter valid email'
+    return 'Enter valid email';
   }
 
   getErrorUserWebsite() {
-    if(this.userId.hasError('required')) {
-      return 'Enter User website'
+    if (this.userId.hasError('required')) {
+      return 'Enter User website';
     }
   }
 
-    getErrorUserCompany() {
-      if(this.userId.hasError('required')) {
-        return 'Enter User Company'
-      }
+  getErrorUserCompany() {
+    if (this.userId.hasError('required')) {
+      return 'Enter User Company';
+    }
   }
 
   userUpdate() {
-    if(this.userFormGroup.valid) {
+    if (this.userFormGroup.valid) {
       const body = this.userFormGroup.value;
-      this.userService.updateUserById(this.urlId,body).subscribe((editedUserValues)=>{
-        this.editedUserData = editedUserValues;
-        this.editedUserData["isChecked"]=true;
-        this.userService.sendEditedUser(this.editedUserData);
-        this.router.navigate(['']);
-        console.log(`user updated`);
-      })
-    }
-    else {
+      this.userService
+        .updateUserById(this.urlId, body)
+        .subscribe((editedUserValues) => {
+          this.editedUserData = editedUserValues;
+          this.editedUserData['isChecked'] = true;
+          this.userService.sendEditedUser(this.editedUserData);
+          this.router.navigate(['']);
+          console.log(`user updated`);
+        });
+    } else {
       this.userFormGroup.markAllAsTouched();
       return;
     }
-    
   }
 
   cancelUserUpdate() {
@@ -110,27 +115,24 @@ export class AddOrEditComponent implements OnInit {
   }
 
   addUser() {
-    if(this.userFormGroup.valid) {
+    if (this.userFormGroup.valid) {
       const body = this.userFormGroup.value;
-    this.userService.addUser(body).subscribe(()=>{
-      this.userService.sendAddedData(body);
-      this.router.navigate(['']);
-      console.log("user added");
-    })
-    }
-    else {
+      this.userService.addUser(body).subscribe(() => {
+        this.userService.sendAddedData(body);
+        this.router.navigate(['']);
+        console.log('user added');
+      });
+    } else {
       this.userFormGroup.markAllAsTouched();
       return;
     }
   }
 
   submit() {
-    if(this.urlId) {
+    if (this.urlId) {
       this.userUpdate();
-    }
-    else {
+    } else {
       this.addUser();
     }
   }
-
 }

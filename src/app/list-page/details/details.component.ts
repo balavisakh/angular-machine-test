@@ -25,8 +25,6 @@ export class DetailsComponent implements OnInit {
       // console.log("idd" ,this.selectedRows.findIndex((user:any)=> user.id === id));
       // this.selectedRows.splice(this.selectedRows.findIndex((user:any)=> user.id === id),1);
     });
-  
-    
   }
 
   editUser(id) {

@@ -13,13 +13,14 @@
                     [checked]="selection.hasValue() && isAllSelected()"
                     [indeterminate]="selection.hasValue() && !isAllSelected()"
                     [aria-label]="checkboxLabel()"
-                    (change)="toggleAndselectAllrows()"
+                    (change)="toggleAndselectAllrows($event)"
                     >
       </mat-checkbox>
     </th>
     <td mat-cell *matCellDef="let row">
       <mat-checkbox (click)="$event.stopPropagation()"
                     (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
                     [checked]="row.isChecked"
                     [aria-label]="checkboxLabel(row)"
                     (change)="toggleAndRowSelect($event,row)">
