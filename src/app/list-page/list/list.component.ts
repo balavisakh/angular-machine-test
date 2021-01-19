@@ -99,6 +99,7 @@ export class ListComponent implements OnInit {
     } else {
       this.selectedUsers.splice(this.selectedUsers.indexOf(row), 1);
     }
+    this.selectedUsers.splice(this.selectedUsers.indexOf(row), 1);
     console.log(this.selectedUsers);
   }
 
