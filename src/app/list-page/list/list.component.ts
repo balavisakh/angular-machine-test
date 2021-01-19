@@ -94,12 +94,14 @@ export class ListComponent implements OnInit {
 
   toggleAndRowSelect($event, row) {
     row.isChecked = $event.checked;
-    if ($event.checked === true) {
+    if (row.isChecked) {
+      this.selectedUsers.splice(this.selectedUsers.findIndex((index)=> index.id === row.id),1)
       this.selectedUsers.push(row);
     } else {
-      this.selectedUsers.splice(this.selectedUsers.indexOf(row), 1);
+      // this.selectedUsers.splice(this.selectedUsers.indexOf(row), 1);
+      this.selectedUsers.splice(this.selectedUsers.findIndex((index)=> index.id === row.id),1)
     }
-    console.log(this.selectedUsers);
+    console.log(this.selectedUsers,"one select");
   }
 
   toggleAndselectAllrows($event) {
